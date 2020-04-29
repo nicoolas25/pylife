@@ -1,18 +1,12 @@
-# Size of the grid?
-#   => Limit to the given input
-# Initial state
-#   => From a multiline string
-# 1st step Reproduce the rules
-
 class Grid():
-    @staticmethod
-    def parse(input):
+    @classmethod
+    def parse(cls, input):
         alive_positions = set()
         for x, line in enumerate(input.split("\n")):
             for y, cell in enumerate(line):
                 if cell == "#":
                     alive_positions.add((x, y))
-        return Grid(alive_positions, x + 1)
+        return cls(alive_positions, x + 1)
 
     def __init__(self, alive_positions, size):
         self._alive_positions = alive_positions
@@ -23,7 +17,7 @@ class Grid():
 
     def next_state(self):
         alive_positions = set()
-        for x in range(self._size)):
+        for x in range(self._size):
             for y in range(self._size):
                 if self._next_cell_liveness(x, y):
                     alive_positions.add((x, y))
@@ -44,5 +38,8 @@ class Grid():
         return sum([1 for x, y in neighbors_positions if self.is_alive(x, y)])
 
     def __str__(self):
-        return "\n".join(self._input)
-
+        lines = []
+        for x in range(self._size):
+            line = ["#" if self.is_alive(x, y) else "." for y in range(self._size)]
+            lines.append("".join(line))
+        return "\n".join(lines)

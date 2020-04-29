@@ -7,13 +7,13 @@ class TestLife(unittest.TestCase):
         input = self.grid("...",
                           ".#.",
                           "..#")
-        assert life.Grid(input)
+        assert life.Grid.parse(input)
 
     def test_access_position_liveness(self):
         input = self.grid("...",
                           "..#",
                           "...")
-        grid = life.Grid(input)
+        grid = life.Grid.parse(input)
         self.assertTrue(grid.is_alive(1, 2))
         self.assertFalse(grid.is_alive(0, 0))
 
@@ -21,42 +21,42 @@ class TestLife(unittest.TestCase):
         input = self.grid("...",
                           ".#.",
                           "..#")
-        grid = life.Grid(input)
+        grid = life.Grid.parse(input)
         self.assertFalse(grid._next_cell_liveness(1, 1))
 
     def test_next_cell_state_when_survival(self):
         input = self.grid("...",
                           "##.",
                           ".##")
-        grid = life.Grid(input)
+        grid = life.Grid.parse(input)
         self.assertTrue(grid._next_cell_liveness(1, 1))
 
     def test_next_cell_state_when_overcrowding(self):
         input = self.grid("###",
                           "###",
                           "###")
-        grid = life.Grid(input)
+        grid = life.Grid.parse(input)
         self.assertFalse(grid._next_cell_liveness(1, 1))
 
     def test_next_cell_state_when_reproduction(self):
         input = self.grid("...",
                           "#..",
                           ".##")
-        grid = life.Grid(input)
+        grid = life.Grid.parse(input)
         self.assertTrue(grid._next_cell_liveness(1, 1))
 
     def test_next_cell_state_when_underpopulation_when_dead(self):
         input = self.grid("...",
                           "#..",
                           ".#.")
-        grid = life.Grid(input)
+        grid = life.Grid.parse(input)
         self.assertFalse(grid._next_cell_liveness(1, 1))
 
     def test_underpopulation(self):
         input = self.grid("...",
                           ".#.",
                           "..#")
-        grid = life.Grid(input)
+        grid = life.Grid.parse(input)
         expected_grid = self.grid("...",
                                   "...",
                                   "...")
@@ -66,7 +66,7 @@ class TestLife(unittest.TestCase):
         input = self.grid("...",
                           "##.",
                           ".##")
-        grid = life.Grid(input)
+        grid = life.Grid.parse(input)
         expected_grid = self.grid("...",
                                   "###",
                                   "###")
@@ -76,7 +76,7 @@ class TestLife(unittest.TestCase):
         input = self.grid("###",
                           "###",
                           "###")
-        grid = life.Grid(input)
+        grid = life.Grid.parse(input)
         expected_grid = self.grid("#.#",
                                   "...",
                                   "#.#")
@@ -86,7 +86,7 @@ class TestLife(unittest.TestCase):
         input = self.grid("...",
                           "#..",
                           ".##")
-        grid = life.Grid(input)
+        grid = life.Grid.parse(input)
         expected_grid = self.grid("...",
                                   ".#.",
                                   ".#.")
